@@ -27,7 +27,8 @@ def book_helper(book) -> dict:
         "publisher": book["publisher"],
         "publish_date": book["publish_date"],
         "price": book["price"],
-        "quantity_available": book["quantity_available"]
+        "quantity_available": book["quantity_available"],
+        "location": book["location"]
     }
 
 @app.get("/", tags=["Root"])

@@ -12,6 +12,7 @@ class BookBase(BaseModel):
     publish_date: str
     price: float
     quantity_available: int
+    location: List[str]
 
 # Create book model (no ID yet)
 class BookCreate(BaseModel):
@@ -23,6 +24,7 @@ class BookCreate(BaseModel):
     publish_date: str
     price: float
     quantity_available: int
+    location: List[str]
 
 # Update book model (optional fields)
 class BookUpdate(BaseModel):
@@ -34,6 +36,7 @@ class BookUpdate(BaseModel):
     publish_date: Optional[str] = None
     price: Optional[float] = None
     quantity_available: Optional[int] = None
+    location: Optional[str] = None
 
 # Full book response model (includes ID)
 class Book(BookBase):
