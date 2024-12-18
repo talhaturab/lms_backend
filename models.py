@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Any
 
 # Base model for books
 class BookBase(BaseModel):
@@ -12,7 +12,7 @@ class BookBase(BaseModel):
     publish_date: str
     price: float
     quantity_available: int
-    location: List[str]
+    location: Any
 
 # Create book model (no ID yet)
 class BookCreate(BaseModel):
@@ -24,7 +24,7 @@ class BookCreate(BaseModel):
     publish_date: str
     price: float
     quantity_available: int
-    location: List[str]
+    location: Any
 
 # Update book model (optional fields)
 class BookUpdate(BaseModel):
@@ -36,7 +36,7 @@ class BookUpdate(BaseModel):
     publish_date: Optional[str] = None
     price: Optional[float] = None
     quantity_available: Optional[int] = None
-    location: Optional[str] = None
+    location: Any = None
 
 # Full book response model (includes ID)
 class Book(BookBase):

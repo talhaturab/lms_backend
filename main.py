@@ -117,3 +117,46 @@ async def delete_book(book_id: str):
         raise HTTPException(status_code=400, detail="Invalid book ID format")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting book: {str(e)}")
+    
+# 6. Fetch books by author(s)
+@app.get("/books/search/by-author", response_model=List[Book], tags=["Books"])
+async def search_books_by_author(author: str):
+    try:
+        # Use case-insensitive regex search for author names in the array
+        books = list(collection.find({
+            "authors": {
+                "$elemMatch": {
+                    "$regex": author, 
+                    "$options": "i"  # Case-insensitive
+                }
+            }
+        }))
+        
+        if not books:
+            raise HTTPException(status_code=404, detail=f"No books found for author: {author}")
+        
+        return [book_helper(book) for book in books]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    
+@app.get("/books/search/by-title", response_model=List[Book], tags=["Books"])
+async def search_books_by_title(title: str):
+    try:
+        # Use case-insensitive regex search for title
+        books = list(collection.find({
+            "title": {
+                "$regex": title, 
+                "$options": "i"  # Case-insensitive
+            }
+        }).limit(10))
+        
+        if not books:
+            raise HTTPException(status_code=404, detail=f"No books found with title: {title}")
+        
+        return [book_helper(book) for book in books]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")

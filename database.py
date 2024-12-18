@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from bson import ObjectId
+from typing import Any
 
 # MongoDB connection setup
 uri = "mongodb+srv://talhaturab:IiWHs4jBHbYuz6Jd@cluster0.likby.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -17,5 +18,5 @@ def book_helper(book) -> dict:
         "publisher": book["publisher"],
         "publish_date": book["publish_date"],
         "price": book["price"],
-        "quantity_available": book["quantity_available"]
+        "quantity_available": Any
     }
